@@ -22,7 +22,7 @@ public class SensorDaoImpl implements SensorDao {
     @Override
     public List<Sensor> findAll() {
         List<Sensor> sensors = sessionFactory.getCurrentSession()
-                .createQuery("SELECT * FROM Sensor", Sensor.class)
+                .createQuery("from Sensor", Sensor.class)
                 .list();
         return sensors;
     }
