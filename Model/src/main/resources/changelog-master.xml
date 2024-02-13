@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="ska201190@gmail.com">
+        <sql>
+            CREATE TABLE IF NOT EXISTS `sensor` (
+                `ID` BIGINT(19) PRIMARY KEY NOT NULL,
+                `NAME` VARCHAR(30),
+                `MODEL` VARCHAR(15),
+                `TYPE_SENSOR` ENUM('Pressure', 'Voltage', 'Temperature', 'Humidity') NOT NULL,
+                `UNIT` ENUM('bar', 'voltage', 'degrees Celsius', 'percent') NOT NULL,
+                `LOCATION` VARCHAR(40),
+                `DESCRIPTION` VARCHAR(200)
+                );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="ska201190@gmail.com">
+        <sql>
+            CREATE TABLE IF NOT EXISTS `range` (
+                `F_ID` BIGINT(19) PRIMARY KEY NOT NULL,
+                `FROM` int NULL,
+                `TO` int NULL,
+                CONSTRAINT `range_ibfk`
+                FOREIGN KEY (`F_ID`)
+                REFERENCES `sensor` (`ID`)
+                ON DELETE CASCADE
+                ON UPDATE CASCADE
+                );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="ska201190@gmail.com">
+        <sql>
+            INSERT INTO `monitorsensors`.`sensor` (`id`, `name`, `model`, `type_sensor`, `unit`, `description`)
+            VALUES ('1', 'MiHomeT', 'TSensor',  'Temperature', 'degrees Celsius', 'Temperature Sensor');
+            INSERT INTO `monitorsensors`.`range` (`F_ID`, `FROM`, `TO`)
+            VALUES ('1', '1', '5');
+        </sql>
+    </changeSet>
+
+
+
+</databaseChangeLog>
