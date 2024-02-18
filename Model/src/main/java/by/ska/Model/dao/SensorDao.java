@@ -8,9 +8,11 @@ public interface SensorDao {
 
     List<Sensor> findAll();
 
-    //Sensor create(Sensor appUser);
+    List<Sensor> findOfName(String name);
 
-//    void delete(Sensor appUser);
+    List<Sensor> findOfModel(String model);
 
-    //Sensor findById(long id);
+    void createOrUpdate(Sensor sensor);
+
+    void delete(Sensor sensor);
 }

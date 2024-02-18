@@ -12,7 +12,7 @@
                 `NAME` VARCHAR(30),
                 `MODEL` VARCHAR(15),
                 `TYPE_SENSOR` ENUM('Pressure', 'Voltage', 'Temperature', 'Humidity') NOT NULL,
-                `UNIT` ENUM('bar', 'voltage', 'degrees Celsius', 'percent') NOT NULL,
+                `UNIT` ENUM('bar', 'voltage', '°С', '%') NOT NULL,
                 `LOCATION` VARCHAR(40),
                 `DESCRIPTION` VARCHAR(200)
                 );
@@ -21,10 +21,10 @@
 
     <changeSet id="2" author="ska201190@gmail.com">
         <sql>
-            CREATE TABLE IF NOT EXISTS `range` (
+            CREATE TABLE IF NOT EXISTS `t_range` (
                 `F_ID` BIGINT(19) PRIMARY KEY NOT NULL,
-                `FROM` int NULL,
-                `TO` int NULL,
+                `F_FROM` int NULL,
+                `F_TO` int NULL,
                 CONSTRAINT `range_ibfk`
                 FOREIGN KEY (`F_ID`)
                 REFERENCES `sensor` (`ID`)
@@ -37,12 +37,33 @@
     <changeSet id="3" author="ska201190@gmail.com">
         <sql>
             INSERT INTO `monitorsensors`.`sensor` (`id`, `name`, `model`, `type_sensor`, `unit`, `description`)
-            VALUES ('1', 'MiHomeT', 'TSensor',  'Temperature', 'degrees Celsius', 'Temperature Sensor');
-            INSERT INTO `monitorsensors`.`range` (`F_ID`, `FROM`, `TO`)
+            VALUES ('1', 'MiHomeT', 'TSensor',  'Temperature', '°С', 'Temperature Sensor');
+            INSERT INTO `monitorsensors`.`t_range` (`F_ID`, `F_FROM`, `F_TO`)
             VALUES ('1', '1', '5');
         </sql>
     </changeSet>
 
-
+    <changeSet id="4" author="ska201190@gmail.com">
+        <sql>
+            CREATE TABLE IF NOT EXISTS `app_user` (
+                `ID` VARCHAR(256) PRIMARY KEY NOT NULL,
+                `USER_NAME` VARCHAR(256) NOT NULL,
+                `USER_PASSWORD` VARCHAR(256),
+                `USER_ROLE` VARCHAR(256)
+                );
+            INSERT INTO `app_user` VALUES (
+                                              '10000000-0000-0000-0000-000000000001',
+                                              'admin',
+                                              '{noop}admin',
+                                              'Administrator'
+                                          );
+            INSERT INTO `app_user` VALUES (
+                                              '10000000-0000-0000-0000-000000000011',
+                                              'user',
+                                              '{noop}user',
+                                              'Viewer'
+                                          );
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>

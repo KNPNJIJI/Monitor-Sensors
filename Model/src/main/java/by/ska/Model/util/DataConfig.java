@@ -1,10 +1,9 @@
 package by.ska.Model.util;
 
 
+import by.ska.Model.model.AppUser;
 import by.ska.Model.model.Range;
 import by.ska.Model.model.Sensor;
-import by.ska.Model.model.Type;
-import by.ska.Model.model.Unit;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.hibernate.SessionFactory;
@@ -22,7 +21,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "by.ska.Model.model")
+@ComponentScan(basePackages = "by.ska")
 @PropertySource(value ={
         "classpath:/dataSource.properties",
         "classpath:/hibernate.properties"
@@ -74,9 +73,8 @@ public class DataConfig {
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setAnnotatedClasses(
                 Sensor.class,
-                Range.class //,
-//                Unit.class,
-//                Type.class
+                Range.class,
+                AppUser.class
         );
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
